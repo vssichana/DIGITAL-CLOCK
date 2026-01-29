@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Digital Clock & Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            margin-bottom: 15px;
+        }
+
+        .clock {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #38bdf8;
+        }
+
+        .countdown {
+            font-size: 20px;
+            color: #facc15;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Digital Clock</h1>
+    <div class="clock" id="clock">00:00:00</div>
+
+    <h2>New Year Countdown</h2>
+    <div class="countdown" id="countdown">Loading...</div>
+</div>
+<script>
+    function updateClock() {
+        const now = new Date();
+        let h = now.getHours().toString().padStart(2, '0');
+        let m = now.getMinutes().toString().padStart(2, '0');
+        let s = now.getSeconds().toString().padStart(2, '0');
+
+        document.getElementById("clock").innerText = `${h}:${m}:${s}`;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function updateCountdown() {
+        const newYear = new Date(new Date().getFullYear() + 1, 0, 1);
+        const now = new Date();
+        const diff = newYear - now;
+
+        if (diff <= 0) {
+            document.getElementById("countdown").innerText = "🎉 Happy New Year!";
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").innerText =
+            `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
+    }
+	setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+</body>
+</html>
